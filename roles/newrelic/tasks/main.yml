@@ -1,0 +1,23 @@
+---
+# This Playbook runs New Relic in the deployment on MongoDB Shard Cluster 
+
+- name: Install the pip package
+  yum: name={{ item }} state=installed
+  with_items:
+   - bc
+   - python-pip
+
+- name: Install New Relic plugin
+  pip: name=newrelic-plugin-agent
+
+- name: Install New Relic repo
+  yum: name=http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm 
+
+- name: Install newrelic package
+  yum: name=newrelic-sysmond
+
+- name: configure New Relic system deamon 
+  command: nrsysmond-config --set license_key={{ newrelic_key }}
+
+- name: Start New Relic Service
+  command: /etc/init.d/newrelic-sysmond start

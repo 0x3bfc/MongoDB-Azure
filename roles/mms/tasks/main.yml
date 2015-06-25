@@ -1,0 +1,24 @@
+---
+# This Playbook for MMS to manage your MongoDB Shard Cluster 
+- name: Install pre-requists packages
+  yum: name={{ item }} state=installed
+  with_items:
+   - gcc
+   - python-devel
+   - python-setuptools
+   - python-libs
+
+- name: download and install mongodb mms agent
+  yum: name=https://mms.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-2.0.8.1184-1.x86_64.rpm
+
+- name: configure mms agent group id and mms api key
+  copy: src=automation-agent.config.j2 dest=/etc/mongodb-mms/automation-agent.config
+
+- name: Start mms agent service
+  command: /etc/init.d/mongodb-mms-automation-agent start
+
+- name: MMS monitors permissions
+  command: chmod +x -R /opt/
+
+- name: Restart mms agent service
+  command: /etc/init.d/mongodb-mms-automation-agent restart
