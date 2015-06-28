@@ -11,7 +11,9 @@ consistency of Mongo database.
 
 # Basic Cluster Architecture
 
-TBA
+
+![Alt text](images/mongodb-azure-github.jpg "Basic Architecture")
+
 
 # Install and Configure Vagrant
 
