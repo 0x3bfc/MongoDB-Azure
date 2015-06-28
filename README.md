@@ -13,13 +13,25 @@ consistency of Mongo database.
 
 TBA
 
-# Install Vagrant
+# Install and Configure Vagrant
 
-TBA
+**Install Vagrant on Ubuntu distribution:**
+
+        $ sudo apt-get install vagrant
+
+ but I suggest to install Vagrant Binary from [here](http://www.vagrantup.com/downloads.html)
+
+**Install Azure Vagrant Plugin**
+
+         $ vagrant plugin install vagrant-azure
+
+**Download this dummy box that vagrant need to use the azure provider**
+
+        $ vagrant box add azure https://github.com/msopentech/vagrant-azure/raw/master/dummy.box
 
 # Install Windows Azure CLI
 
- 1. Ubuntu 12.04 LTS Precise Pangolin:
+ **1. Ubuntu 12.04 LTS Precise Pangolin:**
 
         $ sudo apt-get install curl
         $ curl -sL https://deb.nodesource.com/setup | sudo bash -
@@ -27,7 +39,7 @@ TBA
         $ sudo npm install -g azure-cli
 
 
- 2. Ubuntu 14.04 LTS Trusty Tahr:
+ **2. Ubuntu 14.04 LTS Trusty Tahr:**
 
         $ sudo apt-get install nodejs-legacy
         $ sudo apt-get install npm
@@ -73,11 +85,56 @@ TBA
         help:    Options:
         help:      -h, --help     output usage information
         help:      -v, --version  output the application version
-      
+
+
 
 # Create and manage Azure's certificates
 
-TBA
+ **1. Download your Management Certificate for Azure CLI:**
+
+         $ azure account download
+         info:    Executing command account download
+         info:    Launching browser to **http://go.microsoft.com/fwlink/?LinkId=254**
+         help:    Save the downloaded file, then execute the command
+         help:      account import <file>
+         info:    account download command OK
+
+ keep this file in safe place.
+
+ **2. Import the certificate to your azure account**
+
+	$ azure account import myfile.publishsettings
+        info:    Executing command account import
+        info:    account import command OK
+
+ **3. Check your account list:**
+
+       $ azure account list
+       info:    Executing command account list
+       data:    Name      Id                                    Tenant Id  Current
+       data:    --------  ------------------------------------  ---------  -------
+       data:    ACCOUNT  b80dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  undefined  true   
+       info:    account list command OK
+
+ **4. Create an X.509 certificate to authenticate with Azure**
+
+       $ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout cert.pem -out cert.pem
+
+ **5. Create Microsoft Parallel FX from the X.509 cert**
+ 
+       #Enter the encryption password
+       $ openssl pkcs12 -export -out cert.pfx -in cert.pem -name "My Cert"
+
+ **6.Create service certificate to upload to Azure**
+
+       $ openssl x509 -inform pem -in cert.pem -outform der -out cert.cer 
+
+ Now login to Azure management portal [here](https://manage.windowsazure.com) to upload .cer file certificate
+
+
+       SETTINGS --> MANAGEMENT CERTIFICATES --> UPLOAD
+
+ 
 
 # Configure your Vagrant File
 
