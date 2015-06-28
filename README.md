@@ -22,15 +22,22 @@ TBA
 1. Ubuntu 12.04 LTS Precise Pangolin:
 	
 	$ sudo apt-get install curl
+
 	$ curl -sL https://deb.nodesource.com/setup | sudo bash -
+
 	$ sudo apt-get install -y nodejs
+
 	$ sudo npm install -g azure-cli
+
 
 2. Ubuntu 14.04 LTS Trusty Tahr: 
 
 	$ sudo apt-get install nodejs-legacy
+
 	$ sudo apt-get install npm
+
 	$ sudo npm install -g azure-cli
+
 
 # Create and manage Azure's certificates
 
