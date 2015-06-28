@@ -135,6 +135,19 @@ TBA
        SETTINGS --> MANAGEMENT CERTIFICATES --> UPLOAD
 
  
+ **7. Create RSA private keys**
+
+   Do not do this step if you have a RSA private key to check use  `ls ~/.ssh/` and skip to login keys
+
+   Create RSA private key so that you can log in with your normal credentials
+
+       $ ssh-keygen -t rsa 
+
+   Create login keys
+
+       $ openssl req -new -x509 -key ~/.ssh/id_rsa -out ~/.ssh/ssh-cert.pem
+
+
 
 # Configure your Vagrant File
 
