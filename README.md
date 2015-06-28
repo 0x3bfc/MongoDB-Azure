@@ -147,7 +147,18 @@ TBA
 
        $ openssl req -new -x509 -key ~/.ssh/id_rsa -out ~/.ssh/ssh-cert.pem
 
+# Install and Configure Ansible
 
+ **Ubuntu LTS 12.04**
+
+       $ sudo apt-get install software-properties-common
+       $ sudo apt-add-repository ppa:ansible/ansible
+       $ sudo apt-get update
+       $ sudo apt-get install ansible
+
+ **Other Linux Distributions**
+
+ to install on another Linux Distribution check out [Ansible Docs](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu)
 
 # Configure your Vagrant File
 
