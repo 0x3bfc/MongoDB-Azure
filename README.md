@@ -1,11 +1,11 @@
 # Deploy MongoDB Shard Cluster on Windows Azure
 
-This package is a libaray based on Ansible and Vagrant to deploy and manage a mongoDB shard cluster 
+This package is a libaray based on Ansible and Vagrant to deploy and manage a mongoDB shard cluster
 on Windows Azure. It installs and configures MMS (MongoDB Management System) over MongoDB
 Cloud also it uses NewRelic (A software analytics tool suite) to monitor MongoDB cluster servers
-and the running services on your cluster. The following steps describe how to manage monogDB 
+and the running services on your cluster. The following steps describe how to manage monogDB
 services (Mongod, Mongos and mongoc), automate backup/restore over cloud, monitor mongo services
-and monitor all running services in your infrastructure to make sure that it satisfies the availability and 
+and monitor all running services in your infrastructure to make sure that it satisfies the availability and
 consistency of Mongo database.
 
 
@@ -20,18 +20,60 @@ TBA
 # Install Windows Azure CLI
 
  1. Ubuntu 12.04 LTS Precise Pangolin:
-	
+
         $ sudo apt-get install curl
         $ curl -sL https://deb.nodesource.com/setup | sudo bash -
         $ sudo apt-get install -y nodejs
         $ sudo npm install -g azure-cli
 
 
- 2. Ubuntu 14.04 LTS Trusty Tahr: 
+ 2. Ubuntu 14.04 LTS Trusty Tahr:
 
         $ sudo apt-get install nodejs-legacy
         $ sudo apt-get install npm
         $ sudo npm install -g azure-cli
+
+        $ azure
+        info:             _    _____   _ ___ ___
+        info:            /_\  |_  / | | | _ \ __|
+        info:      _ ___/ _ \__/ /| |_| |   / _|___ _ _
+        info:    (___  /_/ \_\/___|\___/|_|_\___| _____)
+        info:       (_______ _ _)         _ ______ _)_ _
+        info:              (______________ _ )   (___ _ _)
+        info:
+        info:    Microsoft Azure: Microsoft's Cloud Platform_
+        info:
+        info:    Tool version 0.9.5
+        help:
+        help:    Display help for a given command
+        help:      help [options] [command]
+        help:
+        help:    Log in to an Azure subscription using Active Directory. Currently, the user can login only via Microsoft organizational account
+        help:      login [options] [username]
+        help:
+        help:    Log out from Azure subscription using Active Directory. Currently, the user can log out only via Microsoft organizational account
+        help:      logout [options] [username]
+        help:
+        help:    Open the portal in a browser
+        help:      portal [options]
+        help:
+        help:    Commands:
+        help:      account        Commands to manage your account information and publish settings
+        help:      config         Commands to manage your local settings
+        help:      hdinsight      Commands to manage HDInsight clusters and jobs
+        help:      mobile         Commands to manage your Mobile Services
+        help:      network        Commands to manage your Networks
+        help:      sb             Commands to manage your Service Bus configuration
+        help:      service        Commands to manage your Cloud Services
+        help:      site           Commands to manage your Web Sites
+        help:      sql            Commands to manage your SQL Server accounts
+        help:      storage        Commands to manage your Storage objects
+        help:      vm             Commands to manage your Virtual Machines
+        help:
+        help:    Options:
+        help:      -h, --help     output usage information
+        help:      -v, --version  output the application version
+      
 
 # Create and manage Azure's certificates
 
@@ -43,7 +85,7 @@ TBA
 
 # NewRelic Server Monitor
 
-Here I introduce how to get your NewRelic license key to port it into your ansible, to keep 
+Here I introduce how to get your NewRelic license key to port it into your ansible, to keep
 your servers monitored
 
         1- login to windows azure portal
@@ -63,17 +105,17 @@ your servers monitored
         3- select Manage Existing to manage your MongoDB on Azure.
         4- click on install agent and select RHEL/Centos(5.x,6.x)/SUSE/Amazon
         5- From the pop-up screen get the following two arguments
-	
+
 			mmsGroupId=558a6XXXXXXXXXXXXXXXXXXXXX
 			mmsApiKey=eeb066XXXXXXXXXXXXXXXXXXXXX
-	
-        add these values in this file: mongo-azure/roles/mms/files/automation-agent.config.j2 
+
+        add these values in this file: mongo-azure/roles/mms/files/automation-agent.config.j2
 
 
 # Start MongoDB Deployment
 
 finally start mongodb-full deployment by using the following command line:
-	
+
 	ansible-playbook -i hosts playbook.yml -vvvv
 
 
