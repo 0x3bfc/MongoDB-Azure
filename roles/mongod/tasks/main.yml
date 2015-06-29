@@ -40,3 +40,8 @@
 
 - name: Initialize the replication set
   shell: /usr/bin/mongo --port "{{ mongod_port }}" /tmp/repset_init.js
+
+- name: add the admin user
+  mongodb_user: database=admin name=admin password={{ mongo_admin_pass }} login_port={{ mongod_port }} state=present
+  ignore_errors: no
+

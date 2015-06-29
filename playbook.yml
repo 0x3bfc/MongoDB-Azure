@@ -2,8 +2,7 @@
 # This Playbook will deploy the whole mongoDB shard cluster.
 # then start deploying NewRelic Service to monitor your running servers 
 # also it install and configure MMS to manage MongoDB backup/restore operations.
-# this link helps me to deploy mongodb shard cluster
-# https://github.com/ansible/ansible-examples/tree/master/mongodb
+
 # Author: 		Ahmed Abdullah <ahmedaabdulwahed@gmail.com>
 # Github account: 	https://github.com/aabdulwahed/
 
@@ -14,28 +13,10 @@
   - role: common
 
 # Install Mongo daemons
-- hosts: mongo_servers
+- hosts: mongo_servers  
   sudo: yes
   roles:
   - role: mongod
-
-# Install and Configure Mongo Configuration servers
-- hosts: mongoc_servers
-  sudo: yes
-  roles:
-  - role: mongoc
-
-# Install and Configure Mongos 
-- hosts: mongos_servers
-  sudo: yes
-  roles:
-  - role: mongos
-
-# Install and Configure shard Cluster
-- hosts: mongo_servers
-  sudo: yes
-  tasks:
-  - include: roles/mongod/tasks/shards.yml
 
 # NEW RELIC service
 - hosts: newrelic_servers

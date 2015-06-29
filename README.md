@@ -1,11 +1,11 @@
-# Deploy MongoDB Shard Cluster on Windows Azure
+# Deploy MongoDB Cluster on Windows Azure
 
-This package is a libaray based on Ansible and Vagrant to deploy and manage a mongoDB shard cluster
+This package is a libaray based on Ansible and Vagrant to deploy and manage a mongoDB cluster
 on Windows Azure. It installs and configures MMS (MongoDB Management System) over MongoDB
 Cloud also it uses NewRelic (A software analytics tool suite) to monitor MongoDB cluster servers
 and the running services on your cluster. The following steps describe how to manage monogDB
-services (Mongod, Mongos and mongoc), automate backup/restore over cloud, monitor mongo services
-and monitor all running services in your infrastructure to make sure that it satisfies the availability and
+services (Mongod), automate backup/restore over cloud, monitor mongo services and monitor 
+all running services in your infrastructure to make sure that it satisfies the availability and
 consistency of Mongo database.
 
 
@@ -149,6 +149,11 @@ consistency of Mongo database.
 
        $ openssl req -new -x509 -key ~/.ssh/id_rsa -out ~/.ssh/ssh-cert.pem
 
+
+**8. Copy all certificates to cert directory**
+
+	$ cp cert.* cert/
+	
 # Install and Configure Ansible
 
  **Ubuntu LTS 12.04**
@@ -160,11 +165,56 @@ consistency of Mongo database.
 
  **Other Linux Distributions**
 
- to install on another Linux Distribution check out [Ansible Docs](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu)
+ to install on another Linux Distribution check out [Ansible Docs](http://docs.ansible.com/intro_installation.html)
 
 # Configure your Vagrant File
 
-TBA
+**Open Vagrantfile, and edit the following lines:**
+
+	azure.subscription_id = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	azure.storage_acct_name = 'YOUR_STORAGE_ACCOUNT'
+	azure.vm_user = 'ahmed' # change to username on your local host
+	azure.ssh_private_key_file = '/home/ahmed/.ssh/id_rsa'  # change the path of id_rsa to yours
+        azure.ssh_certificate_file = '/home/ahmed/.ssh/ssh-cert.pem' # change the path of ssh-cer.pem to yours
+
+**To Add new replica server uncomment the following block**
+
+where this section describes a new replica server with specific endpoints configuration and different ssh port
+Note: All running cluster nodes are joined into one cloud service to satisfy the affinity option where Affinity 
+group keep them within the same datacenter, so I used port forwarding to map internal ssh '22' to a public port 2203 
+in this case.
+
+	# TO ADD EXTRA SECONDARY MONGODB SERVERS UNCOMMENT THE FOLLOWING LINES
+	#config.vm.define 'slave3' do |cfg|
+	#  cfg.vm.provider :azure do |azure, override|
+	#    common_azure.call azure, override
+	#    azure.vm_name = 'secondary-node3'
+	#    azure.ssh_port = 2203
+	#    azure.tcp_endpoints = '40002:40003,40001:40100, 40000:40400'
+	#  end
+	#end
+
+so you can add any number of servers by adding new blocks as listed above, but with different port numbers and 
+different vm name.
+
+# Configure secret and admin passwords:
+
+Once you have edited your Vagrant file, now it is the time to add mongodb secret and admin password, which is used 
+for database authentication.
+
+	$ vi group_vars/all
+
+	edit this line:
+		# The password for admin user
+		mongo_admin_pass: YOURADMINPASS
+ 
+
+generate any 64 bit characters as a key file and add them to secret file, for more information about how to create 
+it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-file/): 
+
+	$ openssl rand -base64 741 > secret
+	$ cp secret /roles/mongod/files/secret 
+	
 
 # NewRelic Server Monitor
 
@@ -197,19 +247,19 @@ your servers monitored
 
 # Start MongoDB Deployment
 
-finally start mongodb-full deployment by using the following command line:
+**Step 1: Create Cluster Using Vagrant**
 
-	ansible-playbook -i hosts playbook.yml -vvvv
+	$ vagrant up --provider azure
+
+**Step 2:  start mongodb-full deployment by using Ansible:**
+
+	$ ansible-playbook -i hosts playbook.yml -vvvv
 
 
 Your cluster is ready check your NewRelic and MMS services
 
 
-
-To access your mongos router from master node:
-
-	/usr/bin/mongo master:8880/admin -u admin  -p ADMINPASSWORD
-
 # Backup/Restore management using MMS
 
-TBA
+Your Cluster backup services is managed by MMS, to login to [MMS](https://mms.mongodb.com) and install monitor agent and backup agents 
+configure and this enable backup agent service from backup tab you will be charged for backup.
