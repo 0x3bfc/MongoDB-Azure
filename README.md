@@ -11,9 +11,9 @@ consistency of Mongo database.
 
 ## Table of Contents
 
-* [Basic Cluster Architecture](#Basic Cluster Architecture)
-* [Install and Configure Vagrant](#Install and Configure Vagrant)
-* [Install Windows Azure CLI](#Install Windows Azure CLI)
+* [Basic Cluster Architecture](#Basic_Cluster_Architecture)
+* [Install and Configure Vagrant](#Install_and_Configure_Vagrant)
+* [Install Windows Azure CLI](#Install_Windows_Azure_CLI)
 * [Create and manage Azure's certificates](#Create and manage Azure's certificates)
 * [Install and Configure Ansible](#Install and Configure Ansible)
 * [Configure your Vagrant File](#Configure your Vagrant File)
