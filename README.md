@@ -214,7 +214,7 @@ unique name, so the final domain name will be <code>mongo-azure-tests.cloudapp.n
 **Hosts file**
 
     [mongo_servers]
-    ansible_ssh_port=<code>2200</code>   ansible_ssh_host=<code>mongo-azure-tests.cloudapp.net</code>  ansible_ssh_user=<code>ahmed</code>  mongod_port=<code>40000</code>
+    ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed  mongod_port=40000
     ........
     ........
 
