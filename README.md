@@ -23,7 +23,7 @@ consistency of Mongo database.
 * [MongoDB Management Service (MMS)](#MongoDB_Management_Service)
 * [Start MongoDB Deployment](#Start_MongoDB_Deployment)
 * [Backup/Restore management using MMS](#BackupRestore_management_using_MMS)
-* [MongoDB Member Recovery](MongoDB_Member_Recovery)
+* [MongoDB Member Recovery](#MongoDB_Member_Recovery)
 
 <a name="Basic_Cluster_Architecture"/>
 ## Basic Cluster Architecture
@@ -107,7 +107,7 @@ consistency of Mongo database.
         help:      -v, --version  output the application version
 
 
-
+<a name="Create_and_manage_Azure_certificates"/>
 ## Create and manage Azure's certificates
 
  **1. Download your Management Certificate for Azure CLI:**
@@ -172,6 +172,7 @@ consistency of Mongo database.
 
 	$ cp cert.* cert/
 
+<a name="Install_and_Configure_Ansible"/>
 ## Install and Configure Ansible
 
  **Ubuntu LTS 12.04**
@@ -185,6 +186,7 @@ consistency of Mongo database.
 
  to install on another Linux Distribution check out [Ansible Docs](http://docs.ansible.com/intro_installation.html)
 
+<a name="Configure_your_Vagrant_File"/>
 ## Configure your Vagrant File
 
 **Open Vagrantfile, and edit the following lines:**
@@ -218,6 +220,7 @@ in this case.
 so you can add any number of servers by adding new blocks as listed above, but with different port numbers and
 different vm name.
 
+<a name="Edit/Create_Hosts_file"/>
 ## Edit/Create Hosts file
 
 Hosts file is a file used by Ansible, the following data must be matched with vagrant data
@@ -236,6 +239,7 @@ unique name, so the final domain name will be <code>mongo-azure-tests.cloudapp.n
     ........
     ........
 
+<a name="Configure_secret_and_admin_passwords"/>
 ## Configure secret and admin passwords
 
 Once you have edited your Vagrant file, now it is the time to add mongodb secret and admin password, which is used
@@ -255,6 +259,7 @@ it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-fi
 	$ cp secret /roles/mongod/files/secret
 
 
+<a name="NewRelic_Server_Monitor"/>
 ## NewRelic Server Monitor
 
 Here I introduce how to get your NewRelic license key to port it into your ansible, to keep
@@ -269,6 +274,7 @@ your servers monitored
                     license_key=55bbd90f482XXXXXXXXXXXXXXXXXXXXXXX_
         7- add this license key in this file mongo-azure/roles/newrelic/defaults/main.yml
 
+<a name="MongoDB_Management_Service"/>
 ## MongoDB Management Service [MMS]
 
 
@@ -283,7 +289,7 @@ your servers monitored
 
         add these values in this file: mongo-azure/roles/mms/files/automation-agent.config.j2
 
-
+<a name="Start_MongoDB_Deployment"/>
 ## Start MongoDB Deployment
 
 **Step 1: Create Cluster Using Vagrant**
@@ -297,11 +303,12 @@ your servers monitored
 
 Your cluster is ready check your NewRelic and MMS services
 
-
+<a name="BackupRestore_management_using_MMS"/>
 ## Backup/Restore management using MMS
 
 Your Cluster backup services is managed by MMS, check out [MMS](https://mms.mongodb.com) and install monitor agents and backup agents. To enable backup service from backup tab you will be charged for backup.
 
+<a name="MongoDB_Member_Recovery"/>
 ## MongoDB Member Recovery
 
 This section describes how to recover your failed instances within MongoDB cluster, first create Azure node using vagrant
