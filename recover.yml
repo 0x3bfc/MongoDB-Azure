@@ -1,0 +1,32 @@
+---
+# This Playbook will deploy the whole mongoDB shard cluster.
+# then start deploying NewRelic Service to monitor your running servers 
+# also it install and configure MMS to manage MongoDB backup/restore operations.
+
+# Author: 		Ahmed Abdullah <ahmedaabdulwahed@gmail.com>
+# Github account: 	https://github.com/aabdulwahed/
+
+# Install Common Packages
+- hosts: all
+  sudo: yes
+  roles:
+  - role: common
+
+# Install Mongo daemons
+- hosts: mongo_servers  
+  sudo: yes
+  roles:
+  - role: recover
+
+# NEW RELIC service
+- hosts: newrelic_servers
+  sudo: yes
+  roles:
+  - role: newrelic
+
+# MMS MongoDB Section
+- hosts: mms_servers
+  sudo: yes
+  roles:
+  - role: mms
+ 

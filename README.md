@@ -4,7 +4,7 @@ This package is a libaray based on Ansible and Vagrant to deploy and manage a mo
 on Windows Azure. It installs and configures MMS (MongoDB Management System) over MongoDB
 Cloud also it uses NewRelic (A software analytics tool suite) to monitor MongoDB cluster servers
 and the running services on your cluster. The following steps describe how to manage monogDB
-services (Mongod), automate backup/restore over cloud, monitor mongo services and monitor 
+services (Mongod), automate backup/restore over cloud, monitor mongo services and monitor
 all running services in your infrastructure to make sure that it satisfies the availability and
 consistency of Mongo database.
 
@@ -115,7 +115,7 @@ consistency of Mongo database.
        info:    Executing command account list
        data:    Name      Id                                    Tenant Id  Current
        data:    --------  ------------------------------------  ---------  -------
-       data:    ACCOUNT  b80dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  undefined  true   
+       data:    ACCOUNT  b80dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  undefined  true
        info:    account list command OK
 
  **4. Create an X.509 certificate to authenticate with Azure**
@@ -123,27 +123,27 @@ consistency of Mongo database.
        $ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout cert.pem -out cert.pem
 
  **5. Create Microsoft Parallel FX from the X.509 cert**
- 
+
        #Enter the encryption password
        $ openssl pkcs12 -export -out cert.pfx -in cert.pem -name "My Cert"
 
  **6.Create service certificate to upload to Azure**
 
-       $ openssl x509 -inform pem -in cert.pem -outform der -out cert.cer 
+       $ openssl x509 -inform pem -in cert.pem -outform der -out cert.cer
 
  Now login to Azure management portal [here](https://manage.windowsazure.com) to upload .cer file certificate
 
 
        SETTINGS --> MANAGEMENT CERTIFICATES --> UPLOAD
 
- 
+
  **7. Create RSA private keys**
 
    Do not do this step if you have a RSA private key to check use  `ls ~/.ssh/` and skip to login keys
 
    Create RSA private key so that you can log in with your normal credentials
 
-       $ ssh-keygen -t rsa 
+       $ ssh-keygen -t rsa
 
    Create login keys
 
@@ -153,7 +153,7 @@ consistency of Mongo database.
 **8. Copy all certificates to cert directory**
 
 	$ cp cert.* cert/
-	
+
 # Install and Configure Ansible
 
  **Ubuntu LTS 12.04**
@@ -176,12 +176,15 @@ consistency of Mongo database.
 	azure.vm_user = 'ahmed' # change to username on your local host
 	azure.ssh_private_key_file = '/home/ahmed/.ssh/id_rsa'  # change the path of id_rsa to yours
         azure.ssh_certificate_file = '/home/ahmed/.ssh/ssh-cert.pem' # change the path of ssh-cer.pem to yours
+  ....
+  azure.ssh_port = 2200
+  azure.tcp_endpoints = '40000:40000,40001:10100,40002:10400'
 
 **To Add new replica server uncomment the following block**
 
 where this section describes a new replica server with specific endpoints configuration and different ssh port
-Note: All running cluster nodes are joined into one cloud service to satisfy the affinity option where Affinity 
-group keep them within the same datacenter, so I used port forwarding to map internal ssh '22' to a public port 2203 
+Note: All running cluster nodes are joined into one cloud service to satisfy the affinity option where Affinity
+group keep them within the same datacenter, so I used port forwarding to map internal ssh '22' to a public port 2203
 in this case.
 
 	# TO ADD EXTRA SECONDARY MONGODB SERVERS UNCOMMENT THE FOLLOWING LINES
@@ -194,12 +197,30 @@ in this case.
 	#  end
 	#end
 
-so you can add any number of servers by adding new blocks as listed above, but with different port numbers and 
+so you can add any number of servers by adding new blocks as listed above, but with different port numbers and
 different vm name.
+
+# Edit/Create Hosts file
+
+Hosts file is a file used by Ansible, the following data must be matched with vagrant data
+as shown above in vagrant file section
+
+1. ssh port for master node is <code>azure.ssh_port = 2200</code>
+2. TCP endpoints <code>azure.tcp_endpoints = '40000:40000,40001:10100,40002:10400'</code>  
+3. Host name <code>azure.cloud_service_name = 'mongo-azure-tests'</code>, where cloud service is a
+unique name, so the final domain name will be <code>mongo-azure-tests.cloudapp.net</code>  
+4. User name <code>azure.vm_user = 'ahmed'</code>
+
+**Hosts file**
+
+    [mongo_servers]
+    ansible_ssh_port=<code>2200</code>   ansible_ssh_host=<code>mongo-azure-tests.cloudapp.net</code>  ansible_ssh_user=<code>ahmed</code>  mongod_port=<code>40000</code>
+    ........
+    ........
 
 # Configure secret and admin passwords:
 
-Once you have edited your Vagrant file, now it is the time to add mongodb secret and admin password, which is used 
+Once you have edited your Vagrant file, now it is the time to add mongodb secret and admin password, which is used
 for database authentication.
 
 	$ vi group_vars/all
@@ -207,14 +228,14 @@ for database authentication.
 	edit this line:
 		# The password for admin user
 		mongo_admin_pass: YOURADMINPASS
- 
 
-generate any 64 bit characters as a key file and add them to secret file, for more information about how to create 
-it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-file/): 
+
+generate any 64 bit characters as a key file and add them to secret file, for more information about how to create
+it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-file/):
 
 	$ openssl rand -base64 741 > secret
-	$ cp secret /roles/mongod/files/secret 
-	
+	$ cp secret /roles/mongod/files/secret
+
 
 # NewRelic Server Monitor
 
@@ -261,5 +282,14 @@ Your cluster is ready check your NewRelic and MMS services
 
 # Backup/Restore management using MMS
 
-Your Cluster backup services is managed by MMS, to login to [MMS](https://mms.mongodb.com) and install monitor agent and backup agents 
-configure and this enable backup agent service from backup tab you will be charged for backup.
+Your Cluster backup services is managed by MMS, check out [MMS](https://mms.mongodb.com) and install monitor agents and backup agents. To enable backup service from backup tab you will be charged for backup.
+
+# MongoDB Member Recovery
+
+This section describes how to recover your failed instances within MongoDB cluster, first create Azure node using vagrant
+
+     $ vagrant up --provider azure
+
+then recover your missing nodes
+
+     $ ansible-playbook -i hosts recover.yml -vvvv
