@@ -9,13 +9,29 @@ all running services in your infrastructure to make sure that it satisfies the a
 consistency of Mongo database.
 
 
-# Basic Cluster Architecture
+## Table of Contents
+
+* [Basic Cluster Architecture](#Basic Cluster Architecture)
+* [Install and Configure Vagrant](#Install and Configure Vagrant)
+* [Install Windows Azure CLI](#Install Windows Azure CLI)
+* [Create and manage Azure's certificates](#Create and manage Azure's certificates)
+* [Install and Configure Ansible](#Install and Configure Ansible)
+* [Configure your Vagrant File](#Configure your Vagrant File)
+* [Edit/Create Hosts file](#Edit/Create Hosts file)
+* [Configure secret and admin passwords](#Configure secret and admin passwords)
+* [NewRelic Server Monitor](#NewRelic Server Monitor)
+* [MongoDB Management Service (MMS)](#MongoDB Management Service [MMS])
+* [Start MongoDB Deployment](#Start MongoDB Deployment)
+* [Backup/Restore management using MMS](#Backup/Restore management using MMS)
+* [MongoDB Member Recovery](MongoDB Member Recovery)
+
+## Basic Cluster Architecture
 
 
 ![Alt text](images/mongodb-azure-github.jpg "Basic Architecture")
 
 
-# Install and Configure Vagrant
+## Install and Configure Vagrant
 
 **Install Vagrant on Ubuntu distribution:**
 
@@ -31,7 +47,7 @@ consistency of Mongo database.
 
         $ vagrant box add azure https://github.com/msopentech/vagrant-azure/raw/master/dummy.box
 
-# Install Windows Azure CLI
+## Install Windows Azure CLI
 
  **1. Ubuntu 12.04 LTS Precise Pangolin:**
 
@@ -90,7 +106,7 @@ consistency of Mongo database.
 
 
 
-# Create and manage Azure's certificates
+## Create and manage Azure's certificates
 
  **1. Download your Management Certificate for Azure CLI:**
 
@@ -154,7 +170,7 @@ consistency of Mongo database.
 
 	$ cp cert.* cert/
 
-# Install and Configure Ansible
+## Install and Configure Ansible
 
  **Ubuntu LTS 12.04**
 
@@ -167,7 +183,7 @@ consistency of Mongo database.
 
  to install on another Linux Distribution check out [Ansible Docs](http://docs.ansible.com/intro_installation.html)
 
-# Configure your Vagrant File
+## Configure your Vagrant File
 
 **Open Vagrantfile, and edit the following lines:**
 
@@ -200,7 +216,7 @@ in this case.
 so you can add any number of servers by adding new blocks as listed above, but with different port numbers and
 different vm name.
 
-# Edit/Create Hosts file
+## Edit/Create Hosts file
 
 Hosts file is a file used by Ansible, the following data must be matched with vagrant data
 as shown above in vagrant file section
@@ -218,7 +234,7 @@ unique name, so the final domain name will be <code>mongo-azure-tests.cloudapp.n
     ........
     ........
 
-# Configure secret and admin passwords:
+## Configure secret and admin passwords
 
 Once you have edited your Vagrant file, now it is the time to add mongodb secret and admin password, which is used
 for database authentication.
@@ -237,7 +253,7 @@ it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-fi
 	$ cp secret /roles/mongod/files/secret
 
 
-# NewRelic Server Monitor
+## NewRelic Server Monitor
 
 Here I introduce how to get your NewRelic license key to port it into your ansible, to keep
 your servers monitored
@@ -251,7 +267,7 @@ your servers monitored
                     license_key=55bbd90f482XXXXXXXXXXXXXXXXXXXXXXX_
         7- add this license key in this file mongo-azure/roles/newrelic/defaults/main.yml
 
-# MongoDB Management Service (MMS)
+## MongoDB Management Service [MMS]
 
 
         1- create New MMS free account from mms portal https://mms.mongodb.com/
@@ -266,7 +282,7 @@ your servers monitored
         add these values in this file: mongo-azure/roles/mms/files/automation-agent.config.j2
 
 
-# Start MongoDB Deployment
+## Start MongoDB Deployment
 
 **Step 1: Create Cluster Using Vagrant**
 
@@ -280,11 +296,11 @@ your servers monitored
 Your cluster is ready check your NewRelic and MMS services
 
 
-# Backup/Restore management using MMS
+## Backup/Restore management using MMS
 
 Your Cluster backup services is managed by MMS, check out [MMS](https://mms.mongodb.com) and install monitor agents and backup agents. To enable backup service from backup tab you will be charged for backup.
 
-# MongoDB Member Recovery
+## MongoDB Member Recovery
 
 This section describes how to recover your failed instances within MongoDB cluster, first create Azure node using vagrant
 
