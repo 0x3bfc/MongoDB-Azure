@@ -14,23 +14,24 @@ consistency of Mongo database.
 * [Basic Cluster Architecture](#Basic_Cluster_Architecture)
 * [Install and Configure Vagrant](#Install_and_Configure_Vagrant)
 * [Install Windows Azure CLI](#Install_Windows_Azure_CLI)
-* [Create and manage Azure's certificates](#Create and manage Azure's certificates)
-* [Install and Configure Ansible](#Install and Configure Ansible)
-* [Configure your Vagrant File](#Configure your Vagrant File)
-* [Edit/Create Hosts file](#Edit/Create Hosts file)
-* [Configure secret and admin passwords](#Configure secret and admin passwords)
-* [NewRelic Server Monitor](#NewRelic Server Monitor)
-* [MongoDB Management Service (MMS)](#MongoDB Management Service [MMS])
-* [Start MongoDB Deployment](#Start MongoDB Deployment)
-* [Backup/Restore management using MMS](#Backup/Restore management using MMS)
-* [MongoDB Member Recovery](MongoDB Member Recovery)
+* [Create and manage Azure's certificates](#Create_and_manage_Azure_certificates)
+* [Install and Configure Ansible](#Install_and_Configure_Ansible)
+* [Configure your Vagrant File](#Configure_your_Vagrant_File)
+* [Edit/Create Hosts file](#Edit/Create_Hosts_file)
+* [Configure secret and admin passwords](#Configure_secret_and_admin_passwords)
+* [NewRelic Server Monitor](#NewRelic_Server_Monitor)
+* [MongoDB Management Service (MMS)](#MongoDB_Management_Service)
+* [Start MongoDB Deployment](#Start_MongoDB_Deployment)
+* [Backup/Restore management using MMS](#BackupRestore_management_using_MMS)
+* [MongoDB Member Recovery](MongoDB_Member_Recovery)
 
+<a name="Basic_Cluster_Architecture"/>
 ## Basic Cluster Architecture
 
 
 ![Alt text](images/mongodb-azure-github.jpg "Basic Architecture")
 
-
+<a name="Install_and_Configure_Vagrant"/>
 ## Install and Configure Vagrant
 
 **Install Vagrant on Ubuntu distribution:**
@@ -47,6 +48,7 @@ consistency of Mongo database.
 
         $ vagrant box add azure https://github.com/msopentech/vagrant-azure/raw/master/dummy.box
 
+<a name="Install_Windows_Azure_CLI"/>
 ## Install Windows Azure CLI
 
  **1. Ubuntu 12.04 LTS Precise Pangolin:**
