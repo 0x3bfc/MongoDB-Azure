@@ -6,21 +6,21 @@ Vagrant.configure('2') do |config|
 
   common_azure = Proc.new do |azure, override|
         config.vm.box = 'azure'
-	config.ssh.pty= true
+	      config.ssh.pty= true
         azure.mgmt_certificate = 'cert/cert.pem'
         azure.mgmt_endpoint = 'https://management.core.windows.net'
         azure.subscription_id = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' # add here your subscription id
         azure.storage_acct_name = 'vagrantazure'
         azure.vm_image = '5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-65-20150325'
-        azure.vm_user = 'ahmed' # change to username on your local host
-	azure.ssh_private_key_file = '/home/ubuntu/.ssh/id_rsa'	# change the path of id_rsa to yours
-	azure.ssh_certificate_file = '/home/ubuntu/.ssh/ssh-cert.pem' # change the path of ssh-cer.pem to yours
+        azure.vm_user = 'muly' # change to username on your local host
+	      azure.ssh_private_key_file = '/home/muly/.ssh/id_rsa'	# change the path of id_rsa to yours
+	      azure.ssh_certificate_file = '/home/muly/.ssh/ssh-cert.pem' # change the path of ssh-cer.pem to yours
         azure.vm_name = 'mongo-azure'
-        azure.cloud_service_name = 'mongo-azure-tests' # same as vm_name. leave blank to auto-generate
-        azure.deployment_name = 'mongo-azure-test' # defaults to cloud_service_name
-        azure.vm_location = 'West US' # e.g., West US
-	azure.ssh_port = '22'
-	azure.tcp_endpoints = '27017:27017'
+        azure.cloud_service_name = 'mongo-staging' # same as vm_name. leave blank to auto-generate
+        azure.deployment_name = 'mongo-staging' # defaults to cloud_service_name
+        azure.vm_location = 'East US' # e.g., West US
+	      azure.ssh_port = '22'
+	      azure.tcp_endpoints = '27017:27017'
   end
 
   config.vm.define 'primary' do |cfg|
@@ -70,7 +70,7 @@ Vagrant.configure('2') do |config|
   #end
 
 
-  config.ssh.username = 'ahmed' # modify this username
-  config.ssh.private_key_path = "/home/ubuntu/.ssh/id_rsa" # modify this path 
+  config.ssh.username = 'muly' # modify this username
+  config.ssh.private_key_path = "/home/muly/.ssh/id_rsa" # modify this path 
 
 end
