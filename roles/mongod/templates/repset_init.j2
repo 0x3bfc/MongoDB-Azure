@@ -1,6 +1,6 @@
 rs.initiate()
 sleep(13000)
-{% for host in groups['replication_servers'] %}
+{% for host in groups['mongo_servers'] %}
 rs.add("{{ host }}:{{ mongod_port }}")
 sleep(8000)
 {% endfor %}

@@ -2,6 +2,6 @@
 
 # the mongo servers
 [mongo_servers]
-master  ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed  mongod_port=40000
-replica1 ansible_ssh_port=2201   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40001
-replica2 ansible_ssh_port=2202   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40002
+master  ansible_ssh_port=2200   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly  mongod_port=40000
+replica1 ansible_ssh_port=2201   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly mongod_port=40001
+replica2 ansible_ssh_port=2202   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly mongod_port=40002

@@ -16,8 +16,9 @@
 - hosts: mongo_servers  
   sudo: yes
   roles:
-  - common
-  - mongod
-  - newrelic
-  - mms
-  
+  - role: common
+  - role: mongod
+    recover: false	
+  - role: newrelic
+  - role: mms
+
