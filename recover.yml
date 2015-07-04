@@ -3,8 +3,8 @@
 # then start deploying NewRelic Service to monitor your running servers 
 # also it install and configure MMS to manage MongoDB backup/restore operations.
 
-# Author: 		Ahmed Abdullah <ahmedaabdulwahed@gmail.com>
-# Github account: 	https://github.com/aabdulwahed/
+# Author:     Ahmed Abdullah <ahmedaabdulwahed@gmail.com>
+# Github account:   https://github.com/aabdulwahed/
 
 # Install Common Packages
 - hosts: all
@@ -16,17 +16,10 @@
 - hosts: mongo_servers  
   sudo: yes
   roles:
-  - role: recover
-
-# NEW RELIC service
-- hosts: newrelic_servers
-  sudo: yes
-  roles:
-  - role: newrelic
-
-# MMS MongoDB Section
-- hosts: mms_servers
-  sudo: yes
-  roles:
-  - role: mms
- 
+  - common
+  - mongod
+  - newrelic
+  - mms
+  vars:
+    recover: true
+  
