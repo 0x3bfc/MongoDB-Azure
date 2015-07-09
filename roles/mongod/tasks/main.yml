@@ -55,5 +55,5 @@
 
 - name: add the admin user
   mongodb_user: database=admin name=admin password={{ mongo_admin_pass }} login_port={{ mongod_port }} state=present
-  ignore_errors: "{{recover}}"
+  when: not recover
 
