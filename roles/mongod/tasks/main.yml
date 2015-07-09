@@ -4,7 +4,7 @@
 - name: create data directory for mongodb
   file: path={{ mongodb_datadir_prefix }}/mongo-{{ inventory_hostname }} state=directory owner=mongod group=mongod
   delegate_to: '{{ item }}'
-  with_items: groups.replication_servers
+  with_items: groups.mongo_servers
 
 - name: create data directory for mongodb
   file: path=/var/log/mongo state=directory owner=mongod group=mongod
@@ -15,22 +15,33 @@
 - name: Create the mongodb startup file
   template: src=mongod.j2 dest=/etc/init.d/mongod-{{ inventory_hostname }} mode=0655
   delegate_to: '{{ item }}'
-  with_items: groups.replication_servers
+  with_items: groups.mongo_servers
 
 
 - name: Create the mongodb configuration file
   template: src=mongod.conf.j2 dest=/etc/mongod-{{ inventory_hostname }}.conf
   delegate_to: '{{ item }}'
-  with_items: groups.replication_servers
+  with_items: groups.mongo_servers
 
 - name: Copy the keyfile for authentication
   copy: src=secret dest={{ mongodb_datadir_prefix }}/secret owner=mongod group=mongod mode=0400
 
+- name: Stop mongodb Service
+  service: name=mongod state=stopped
+  ignore_errors: yes
+  when: recover
+
+- name:  Remove mongodb lock
+  command: rm /data/mongo-{{ inventory_hostname }}/mongod.lock
+  delegate_to: '{{ item }}'
+  with_items: groups.mongo_servers
+  ignore_errors: yes
+  when: recover
 
 - name: Start the mongodb service
   command: creates=/var/lock/subsys/mongod-{{ inventory_hostname }} /etc/init.d/mongod-{{ inventory_hostname }} start
   delegate_to: '{{ item }}'
-  with_items: groups.replication_servers
+  with_items: groups.mongo_servers
 
 - name: Create the file to initialize the mongod replica set
   template: src=repset_init.j2 dest=/tmp/repset_init.js
@@ -40,8 +51,9 @@
 
 - name: Initialize the replication set
   shell: /usr/bin/mongo --port "{{ mongod_port }}" /tmp/repset_init.js
+  when: not recover
 
 - name: add the admin user
   mongodb_user: database=admin name=admin password={{ mongo_admin_pass }} login_port={{ mongod_port }} state=present
-  ignore_errors: no
+  ignore_errors: "{{recover}}"
 

@@ -2,42 +2,6 @@
 
 # the mongo servers
 [mongo_servers]
-master  ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed  mongod_port=40000
-replica1 ansible_ssh_port=2201   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40001
-replica2 ansible_ssh_port=2202   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40002
-
-#replica3 ansible_ssh_port=2203   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40003
-#replica4 ansible_ssh_port=2204   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40004
-
-
-# replica servers
-[replication_servers]
-master  ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed  mongod_port=40000
-replica1 ansible_ssh_port=2201   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40001
-replica2 ansible_ssh_port=2202   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40002
-
-#replica3 ansible_ssh_port=2203   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40003
-#replica4 ansible_ssh_port=2204   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed mongod_port=40004
-
-
-
-
-#NewRelic servers
-[newrelic_servers]
-master  ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-replica1        ansible_ssh_port=2201   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-replica2        ansible_ssh_port=2202   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-
-#replica3 ansible_ssh_port=2203   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed 
-#replica4 ansible_ssh_port=2204   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-
-
-# MMS Servers
-[mms_servers]
-master  ansible_ssh_port=2200   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-replica1        ansible_ssh_port=2201   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-replica2        ansible_ssh_port=2202   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-
-#replica3 ansible_ssh_port=2203   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-#replica4 ansible_ssh_port=2204   ansible_ssh_host=mongo-azure-tests.cloudapp.net  ansible_ssh_user=ahmed
-
+master  ansible_ssh_port=2200   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly  mongod_port=40000
+replica1 ansible_ssh_port=2201   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly mongod_port=40001
+replica2 ansible_ssh_port=2202   ansible_ssh_host=mongo-staging.cloudapp.net  ansible_ssh_user=muly mongod_port=40002

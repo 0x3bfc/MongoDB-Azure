@@ -16,17 +16,9 @@
 - hosts: mongo_servers  
   sudo: yes
   roles:
+  - role: common
   - role: mongod
-
-# NEW RELIC service
-- hosts: newrelic_servers
-  sudo: yes
-  roles:
+    recover: false	
   - role: newrelic
-
-# MMS MongoDB Section
-- hosts: mms_servers
-  sudo: yes
-  roles:
   - role: mms
- 
+

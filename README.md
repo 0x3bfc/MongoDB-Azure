@@ -256,7 +256,7 @@ generate any 64 bit characters as a key file and add them to secret file, for mo
 it check out this [link](http://docs.mongodb.org/manual/tutorial/generate-key-file/):
 
 	$ openssl rand -base64 741 > secret
-	$ cp secret /roles/mongod/files/secret
+	$ cp secret ./roles/mongod/files/secret
 
 
 <a name="NewRelic_Server_Monitor"/>
