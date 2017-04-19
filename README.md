@@ -109,7 +109,15 @@ consistency of Mongo database.
 
 <a name="Create_and_manage_Azure_certificates"/>
 ## Create and manage Azure's certificates
+ 
+ **0. Switch to asm mode:**
+ 
+         $ azure config mode asm
+         info:    Executing command config mode
+         info:    New mode is asm
+         info:    config mode command OK
 
+	 
  **1. Download your Management Certificate for Azure CLI:**
 
          $ azure account download
